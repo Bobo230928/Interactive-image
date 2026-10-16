@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Interactive Photo Gallery</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #image {
+            width: min(600px, 100%);
+            min-height: 250px;
+            height: clamp(250px, 50vw, 400px);
+            margin: 20px auto;
+            border: 2px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-size: cover;
+            background-position: center;
+            font-size: 150%;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .preview {
+            width: 150px;
+            height: 100px;
+            border: 2px solid #333;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .preview:focus-visible {
+            outline: 3px solid #1769aa;
+            outline-offset: 3px;
+        }
+    </style>
+</head>
+
+<body onload="addTabFocus()">
+
+    <h1>Interactive Photo Gallery</h1>
+
+    <div id="image" aria-live="polite">
+        Hover over or focus on an image below.
+    </div>
+
+    <div class="gallery">
+    <img class="preview"
+        src="https://images.unsplash.com/photo-1506744038136-46273834b3fb"
+        alt="Mountain landscape"
+        onmouseover="upDate(this)"
+        onmouseleave="unDo()"
+        onfocus="upDate(this)"
+        onblur="unDo()">
+
+    <img class="preview"
+        src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+        alt="Beach at sunset"
+        onmouseover="upDate(this)"
+        onmouseleave="unDo()"
+        onfocus="upDate(this)"
+        onblur="unDo()">
+
+    <img class="preview"
+        src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e"
+        alt="Forest pathway"
+        onmouseover="upDate(this)"
+        onmouseleave="unDo()"
+        onfocus="upDate(this)"
+        onblur="unDo()">
+
+    <img class="preview"
+        src="https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f"
+        alt="City skyline"
+        onmouseover="upDate(this)"
+        onmouseleave="unDo()"
+        onfocus="upDate(this)"
+        onblur="unDo()">
+
+    <img class="preview"
+        src="https://images.unsplash.com/photo-1518837695005-2083093ee35b"
+        alt="Ocean waves"
+        onmouseover="upDate(this)"
+        onmouseleave="unDo()"
+        onfocus="upDate(this)"
+        onblur="unDo()">
+
+    <img class="preview"
+        src="https://images.unsplash.com/photo-1501785888041-af3ef285b470"
+        alt="Snowy mountains"
+        onmouseover="upDate(this)"
+        onmouseleave="unDo()"
+        onfocus="upDate(this)"
+        onblur="unDo()">
+    </div>
+
+    <script>
+        function upDate(previewPic) {
+            console.log("Image focused or hovered");
+
+            document.getElementById("image").style.backgroundImage =
+                "url('" + previewPic.src + "')";
+
+            document.getElementById("image").textContent =
+                previewPic.alt;
+        }
+
+        function unDo() {
+            if (document.activeElement.matches(".preview") ||
+                document.querySelector(".preview:hover")) {
+                return;
+            }
+
+            document.getElementById("image").style.backgroundImage = "none";
+            document.getElementById("image").textContent =
+                "Hover over or focus on an image below.";
+        }
+
+        function addTabFocus() {
+            console.log("Page loaded successfully");
+
+            let images = document.querySelectorAll(".preview");
+
+            for (let i = 0; i < images.length; i++) {
+                images[i].setAttribute("tabindex", "0");
+                console.log("Tabindex added to image " + (i + 1));
+            }
+        }
+    </script>
+
+</body>
+</html>
